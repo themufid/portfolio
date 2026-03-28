@@ -49,7 +49,7 @@ Saya membangun solusi digital yang tidak hanya menarik secara visual, tetapi jug
 ## 📁 Project Structure
 
 ```
-portfolioku/
+portfolio/
 │── index.html
 │── README.md
 ```
@@ -61,7 +61,7 @@ portfolioku/
 ### 1. Clone Repository
 
 ```
-git clone https://github.com/themufid/portofolioku.git
+git clone https://github.com/themufid/portfolio.git
 ```
 
 ### 2. Buka Project
