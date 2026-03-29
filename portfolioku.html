@@ -231,20 +231,23 @@
         </button>
     </header>
 
-<div id="installTopBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-[9999]">
-    
-    <div class="flex items-center justify-between glass-card px-4 py-3 shadow-xl rounded-2xl">
-        
-        <div class="flex items-center gap-3">
-            <img src="/icon-192.png" class="w-10 h-10 rounded-xl">
-            <div>
-                <p class="font-bold text-sm">Install Mufid App</p>
-                <p class="text-xs text-slate-500">mufid.hinaitech.com</p>
-            </div>
-        </div>
+<!-- INSTALL POPUP CENTER -->
+<div id="installPopup" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
 
-        <button id="installBtnTop" class="text-indigo-600 font-bold text-sm">
-            Instal
+    <div class="glass-card p-6 rounded-3xl w-[90%] max-w-sm text-center relative">
+
+        <!-- CLOSE -->
+        <button onclick="closeInstall()" class="absolute top-3 right-4 text-lg">✕</button>
+
+        <img src="/icon-192.png" class="w-16 h-16 mx-auto mb-4 rounded-2xl">
+
+        <h3 class="font-black text-lg mb-2">Install Mufid App 🚀</h3>
+        <p class="text-sm text-slate-500 mb-5">
+            Install aplikasi untuk pengalaman seperti app di HP kamu
+        </p>
+
+        <button id="installBtn" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold">
+            Install Sekarang
         </button>
 
     </div>
@@ -874,34 +877,55 @@ window.onload = () => {
     init3D();
     AOS.init({ duration: 800, once: true });
 
-    showNotifs(); // 🔥 ini tambahan
+    showNotifs(); 
 };
-        // REGISTER SERVICE WORKER
+        
+// REGISTER SERVICE WORKER
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log("SW Registered"));
+    navigator.serviceWorker.register('/sw.js');
 }
 
 
-// INSTALL PROMPT
-let deferredPrompt;
+let deferredPrompt = null;
 
+// DETECT ANDROID INSTALL PROMPT
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
-    document.getElementById('installTopBanner').classList.remove('hidden');
+    // tampilkan popup setelah 2 detik
+    setTimeout(() => {
+        document.getElementById('installPopup').classList.remove('hidden');
+    }, 2000);
 });
 
-document.getElementById('installBtnTop').addEventListener('click', async () => {
-    if (!deferredPrompt) return;
 
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+// BUTTON INSTALL
+document.getElementById('installBtn').addEventListener('click', async () => {
 
-    deferredPrompt = null;
-    document.getElementById('installTopBanner').style.display = 'none';
+    // ANDROID (AUTO INSTALL)
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+
+        if (outcome === 'accepted') {
+            console.log('Installed');
+        }
+
+        deferredPrompt = null;
+        closeInstall();
+
+    } else {
+        // IOS / FALLBACK
+        alert("Untuk iPhone:\nKlik Share → Add to Home Screen 📲");
+    }
 });
+
+
+// CLOSE POPUP
+function closeInstall() {
+    document.getElementById('installPopup').classList.add('hidden');
+    }
     </script>
 </body>
     
