@@ -1,6 +1,6 @@
 # 🚀 Faisal Mufid — Portfolio Website
 
-Website portfolio profesional yang menampilkan pengalaman, skill, dan layanan jasa pembuatan website & digital solution (Tapi hanya dibuat 1 File saja Untuk sementara).
+Website portfolio profesional yang menampilkan pengalaman, skill, dan layanan jasa pembuatan website & digital solution .
 
 ---
 
@@ -67,7 +67,7 @@ git clone https://github.com/themufid/portfolio.git
 ### 2. Buka Project
 
 ```
-cd portfolioku
+cd portfolio
 ```
 
 ### 3. Jalankan
@@ -75,7 +75,7 @@ cd portfolioku
 Cukup buka file:
 
 ```
-index.html
+portfolioku.html
 ```
 
 ---
