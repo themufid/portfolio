@@ -806,247 +806,264 @@
         <li id="m3">❌ Klik Contact</li>
     </ul>
 </div>
-    <script>
 
-        let scene, camera, renderer, globe, starField;
-        let mouseX = 0, mouseY = 0;
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-        function init3D() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
+    // =========================
+    // 3D BACKGROUND
+    // =========================
+    let scene, camera, renderer, globe, starField;
+    let mouseX = 0, mouseY = 0;
 
-            const light = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(light);
+    function init3D() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
-            const globeGeo = new THREE.SphereGeometry(180, 64, 64);
-            const globeMat = new THREE.MeshPhongMaterial({ color: 0x6366f1, wireframe: true, transparent: true, opacity: 0.5 });
-            globe = new THREE.Mesh(globeGeo, globeMat);
-            globe.position.set(window.innerWidth > 1024 ? 350 : 0, 0, 0);
-            scene.add(globe);
+        const container = document.getElementById('canvas-container');
+        if (container) container.appendChild(renderer.domElement);
 
-            const starsGeo = new THREE.BufferGeometry();
-            const starsCount = 4000;
-            const starsPos = new Float32Array(starsCount * 3);
-            for(let i=0; i<starsCount*3; i++) starsPos[i] = (Math.random() - 0.5) * 3000;
-            starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
-            starField = new THREE.Points(starsGeo, new THREE.PointsMaterial({ color: 0x6366f1, size: 2 }));
-            scene.add(starField);
+        const light = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(light);
 
-            camera.position.z = 800;
-            animate();
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            if(globe) { globe.rotation.y += 0.005; globe.position.y += (mouseY * 0.05 - globe.position.y) * 0.05; }
-            if(starField) starField.rotation.y += 0.0002;
-            renderer.render(scene, camera);
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX - window.innerWidth / 2;
-            mouseY = e.clientY - window.innerHeight / 2;
+        const globeGeo = new THREE.SphereGeometry(180, 64, 64);
+        const globeMat = new THREE.MeshPhongMaterial({
+            color: 0x6366f1,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
         });
 
-        document.getElementById('themeToggle').addEventListener('click', () => {
+        globe = new THREE.Mesh(globeGeo, globeMat);
+        globe.position.set(window.innerWidth > 1024 ? 350 : 0, 0, 0);
+        scene.add(globe);
+
+        const starsGeo = new THREE.BufferGeometry();
+        const starsCount = 4000;
+        const starsPos = new Float32Array(starsCount * 3);
+
+        for (let i = 0; i < starsCount * 3; i++) {
+            starsPos[i] = (Math.random() - 0.5) * 3000;
+        }
+
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
+
+        starField = new THREE.Points(
+            starsGeo,
+            new THREE.PointsMaterial({ color: 0x6366f1, size: 2 })
+        );
+
+        scene.add(starField);
+
+        camera.position.z = 800;
+        animate();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        if (globe) {
+            globe.rotation.y += 0.005;
+            globe.position.y += (mouseY * 0.05 - globe.position.y) * 0.05;
+        }
+
+        if (starField) {
+            starField.rotation.y += 0.0002;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX - window.innerWidth / 2;
+        mouseY = e.clientY - window.innerHeight / 2;
+    });
+
+    // =========================
+    // THEME TOGGLE
+    // =========================
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
-            document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+
+            document.getElementById('themeIcon')
+                .setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+
             lucide.createIcons();
         });
+    }
 
-        window.onload = () => {
-            lucide.createIcons();
-            init3D();
-            AOS.init({ duration: 800, once: true });
-        };
-        function createNotif(title, desc, link) {
-    const notif = document.createElement("div");
-    notif.className = "notif relative";
+    // =========================
+    // NOTIFICATION
+    // =========================
+    function createNotif(title, desc, link) {
+        const container = document.getElementById("notif-container");
+        if (!container) return;
 
-    notif.innerHTML = `
-        <div class="notif-close">✕</div>
-        <div class="notif-title">${title}</div>
-        <div class="notif-desc mt-1">${desc}</div>
-    `;
+        const notif = document.createElement("div");
+        notif.className = "notif relative";
 
-    // Klik notif
-    notif.addEventListener("click", () => {
-        if (link) window.open(link, "_blank");
+        notif.innerHTML = `
+            <div class="notif-close">✕</div>
+            <div class="notif-title">${title}</div>
+            <div class="notif-desc mt-1">${desc}</div>
+        `;
+
+        notif.addEventListener("click", () => {
+            if (link) window.open(link, "_blank");
+        });
+
+        notif.querySelector(".notif-close").addEventListener("click", (e) => {
+            e.stopPropagation();
+            notif.remove();
+        });
+
+        container.appendChild(notif);
+
+        setTimeout(() => notif.classList.add("show"), 100);
+    }
+
+    function showNotifs() {
+        createNotif("🔥 Open Project", "Lihat project terbaru saya", "https://hinaitech.com");
+
+        setTimeout(() => {
+            createNotif("🚀 Digital Product", "Cek produk digital saya", "https://Lynk.id/almufid");
+        }, 800);
+
+        setTimeout(() => {
+            createNotif("💬 Hubungi Saya", "Klik untuk chat WhatsApp langsung", "https://wa.me/6282144137914");
+        }, 1600);
+    }
+
+    // =========================
+    // INSTALL PWA
+    // =========================
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        setTimeout(() => {
+            document.getElementById('installPopup')?.classList.remove('hidden');
+        }, 2000);
     });
 
-    // Close button
-    notif.querySelector(".notif-close").addEventListener("click", (e) => {
-        e.stopPropagation();
-        notif.remove();
+    const installBtn = document.getElementById("installBtn");
+
+    if (installBtn) {
+        installBtn.addEventListener("click", async () => {
+
+            document.getElementById("installSound")?.play();
+
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                closeInstall();
+            } else {
+                alert("iPhone: Share → Add to Home Screen 📲");
+            }
+        });
+    }
+
+    window.closeInstall = function () {
+        document.getElementById('installPopup')?.classList.add('hidden');
+    }
+
+    // =========================
+    // SPLASH SCREEN
+    // =========================
+    setTimeout(() => {
+        const splash = document.getElementById("splashScreen");
+        if (splash) {
+            splash.style.opacity = "0";
+            setTimeout(() => splash.style.display = "none", 500);
+        }
+    }, 2000);
+
+    // =========================
+    // LOADING NAV
+    // =========================
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", () => {
+            const loading = document.getElementById("loadingScreen");
+            if (!loading) return;
+
+            loading.classList.remove("hidden");
+
+            setTimeout(() => {
+                loading.classList.add("hidden");
+            }, 800);
+        });
     });
 
-    document.getElementById("notif-container").appendChild(notif);
+    // =========================
+    // APP MODE
+    // =========================
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        document.body.classList.add("app-mode");
+    }
 
-    // animasi masuk
-    setTimeout(() => notif.classList.add("show"), 100);
-}
-
-// AUTO SHOW 3 NOTIF
-function showNotifs() {
-    createNotif(
-        "🔥 Open Project",
-        "Lihat project terbaru saya",
-        "https://hinaitech.com"
-    );
-
+    // =========================
+    // MISSION SYSTEM
+    // =========================
     setTimeout(() => {
-        createNotif(
-            "🚀 Digital Product",
-            "Cek produk digital saya",
-            "https://Lynk.id/almufid"
-        );
-    }, 800);
 
-    setTimeout(() => {
-        createNotif(
-            "💬 Hubungi Saya",
-            "Klik untuk chat WhatsApp langsung",
-            "https://wa.me/6282144137914"
-        );
-    }, 1600);
-}
+        const m1 = document.getElementById("m1");
+        const m2 = document.getElementById("m2");
+        const m3 = document.getElementById("m3");
 
-// Panggil saat load
-window.onload = () => {
+        if (!m1 || !m2 || !m3) return;
+
+        const about = document.getElementById("about");
+        const exp = document.getElementById("experience");
+        const contact = document.getElementById("contact");
+
+        window.addEventListener("scroll", () => {
+
+            if (about && about.getBoundingClientRect().top < 200) {
+                m1.innerHTML = "✅ Buka About";
+            }
+
+            if (exp && exp.getBoundingClientRect().top < 200) {
+                m2.innerHTML = "✅ Lihat Experience";
+            }
+
+            if (contact && contact.getBoundingClientRect().top < 200) {
+                m3.innerHTML = "✅ Klik Contact";
+            }
+
+        });
+
+    }, 1000);
+
+    // =========================
+    // INIT ALL
+    // =========================
     lucide.createIcons();
     init3D();
     AOS.init({ duration: 800, once: true });
+    showNotifs();
 
-    showNotifs(); 
-};
-        
-// REGISTER SERVICE WORKER
+});
+
+// =========================
+// SERVICE WORKER
+// =========================
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
 }
-
-
-let deferredPrompt = null;
-
-// DETECT ANDROID INSTALL PROMPT
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    // tampilkan popup setelah 2 detik
-    setTimeout(() => {
-        document.getElementById('installPopup').classList.remove('hidden');
-    }, 2000);
-});
-
-
-// BUTTON INSTALL
-document.getElementById('installBtn').addEventListener('click', async () => {
-
-    // ANDROID (AUTO INSTALL)
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-
-        if (outcome === 'accepted') {
-            console.log('Installed');
-        }
-
-        deferredPrompt = null;
-        closeInstall();
-
-    } else {
-        // IOS / FALLBACK
-        alert("Untuk iPhone:\nKlik Share → Add to Home Screen 📲");
-    }
-});
-
-
-// CLOSE POPUP
-function closeInstall() {
-    document.getElementById('installPopup').classList.add('hidden');
-    }
-
-        // SPLASH SCREEN
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        document.getElementById("splashScreen").style.opacity = "0";
-        setTimeout(() => {
-            document.getElementById("splashScreen").style.display = "none";
-        }, 500);
-    }, 2000);
-});
-        // LOADING EFFECT SAAT PINDAH SECTION
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", () => {
-        const loading = document.getElementById("loadingScreen");
-        loading.classList.remove("hidden");
-
-        setTimeout(() => {
-            loading.classList.add("hidden");
-        }, 800);
-    });
-});
-        document.getElementById("installBtn").addEventListener("click", async () => {
-
-    document.getElementById("installSound").play(); // 🔊 SOUND
-
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-    } else {
-        alert("iPhone: Share → Add to Home Screen");
-    }
-});
-        
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-    document.body.classList.add("app-mode");
-}
-        // ===== DEBUG MISSION =====
-console.log("Mission script jalan");
-
-// pastikan element ada
-setTimeout(() => {
-
-    const m1 = document.getElementById("m1");
-    const m2 = document.getElementById("m2");
-    const m3 = document.getElementById("m3");
-
-    if (!m1 || !m2 || !m3) {
-        console.error("Mission element tidak ditemukan!");
-        return;
-    }
-
-    const about = document.getElementById("about");
-    const exp = document.getElementById("experience");
-    const contact = document.getElementById("contact");
-
-    window.addEventListener("scroll", () => {
-
-        if (about && about.getBoundingClientRect().top < 200) {
-            m1.innerHTML = "✅ Buka About";
-        }
-
-        if (exp && exp.getBoundingClientRect().top < 200) {
-            m2.innerHTML = "✅ Lihat Experience";
-        }
-
-        if (contact && contact.getBoundingClientRect().top < 200) {
-            m3.innerHTML = "✅ Klik Contact";
-        }
-
-    });
-
-}, 1000);
-    </script>
-</body>
+</script>
     
-<!-- NOTIFICATION CONTAINER -->
-<div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
+    <!-- NOTIFICATION CONTAINER -->
+    <div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
+    
+</body>
     
 <!-- Footer -->
 <footer class="text-center py-10 px-6">
