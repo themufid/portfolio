@@ -806,7 +806,10 @@
         <li id="m3">❌ Klik Contact</li>
     </ul>
 </div>
-
+    
+    <!-- NOTIFICATION CONTAINER -->
+    <div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
+    
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -1059,10 +1062,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
 }
 </script>
-    
-    <!-- NOTIFICATION CONTAINER -->
-    <div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
-    
+
 </body>
     
 <!-- Footer -->
