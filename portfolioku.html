@@ -171,6 +171,47 @@
         @media (max-width: 768px) {
             .bottom-nav { width: 95%; justify-content: space-around; gap: 5px; }
         }
+        /* NOTIFICATION */
+.notif {
+    min-width: 280px;
+    max-width: 320px;
+    padding: 16px;
+    border-radius: 20px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.notif.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notif:hover {
+    transform: scale(1.03);
+}
+
+.notif-title {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.notif-desc {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.notif-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+}
     </style>
 </head>
 <body class="light-mode">
@@ -754,8 +795,72 @@
             init3D();
             AOS.init({ duration: 800, once: true });
         };
+        function createNotif(title, desc, link) {
+    const notif = document.createElement("div");
+    notif.className = "notif relative";
+
+    notif.innerHTML = `
+        <div class="notif-close">✕</div>
+        <div class="notif-title">${title}</div>
+        <div class="notif-desc mt-1">${desc}</div>
+    `;
+
+    // Klik notif
+    notif.addEventListener("click", () => {
+        if (link) window.open(link, "_blank");
+    });
+
+    // Close button
+    notif.querySelector(".notif-close").addEventListener("click", (e) => {
+        e.stopPropagation();
+        notif.remove();
+    });
+
+    document.getElementById("notif-container").appendChild(notif);
+
+    // animasi masuk
+    setTimeout(() => notif.classList.add("show"), 100);
+}
+
+// AUTO SHOW 3 NOTIF
+function showNotifs() {
+    createNotif(
+        "🔥 Open Project",
+        "Lihat project terbaru saya",
+        "#experience"
+    );
+
+    setTimeout(() => {
+        createNotif(
+            "🚀 Digital Product",
+            "Cek produk digital saya",
+            "https://Lynk.id/almufid"
+        );
+    }, 800);
+
+    setTimeout(() => {
+        createNotif(
+            "💬 Hubungi Saya",
+            "Klik untuk chat WhatsApp langsung",
+            "https://wa.me/6282144137914"
+        );
+    }, 1600);
+}
+
+// Panggil saat load
+window.onload = () => {
+    lucide.createIcons();
+    init3D();
+    AOS.init({ duration: 800, once: true });
+
+    showNotifs(); // 🔥 ini tambahan
+};
     </script>
 </body>
+    
+<!-- NOTIFICATION CONTAINER -->
+<div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
+    
 <!-- Footer -->
 <footer class="text-center py-10 px-6">
     
