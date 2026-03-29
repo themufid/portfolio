@@ -214,10 +214,25 @@
     right: 10px;
     cursor: pointer;
 }
+  .app-mode .top-nav {
+    display: none;
+}
+
+.app-mode body {
+    padding-top: 10px;
+}
     </style>
 </head>
 <body class="light-mode">
+<!-- SPLASH SCREEN -->
+<div id="splashScreen" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black text-white">
 
+    <img src="/icon-192.png" class="w-24 mb-6 animate-pulse">
+
+    <h1 class="text-2xl font-black mb-2">Mufid App</h1>
+    <p class="text-sm text-slate-400">Loading Experience...</p>
+
+</div>
     <div id="canvas-container"></div>
 
     <!-- Header -->
@@ -762,8 +777,45 @@
         </section>
 
     </main>
-
+    <audio id="installSound" src="/install.mp3"></audio>
+    
+<!-- LOADING OVERLAY -->
+<div id="loadingScreen" class="hidden fixed inset-0 z-[99998] bg-black/80 flex items-center justify-center text-white">
+    <p class="animate-pulse text-lg">Loading...</p>
+</div>
+  <!-- MISSION BOX -->
+<div id="missionBox" class="fixed bottom-6 left-6 z-[9999] glass-card p-4 rounded-2xl text-xs">
+    🎯 Mission:
+    <ul class="mt-2 space-y-1">
+        <li id="m1">❌ Buka About</li>
+        <li id="m2">❌ Lihat Experience</li>
+        <li id="m3">❌ Klik Contact</li>
+    </ul>
+</div>  
     <script>
+const about = document.getElementById("about");
+const exp = document.getElementById("experience");
+const contact = document.getElementById("contact");
+
+window.addEventListener("scroll", () => {
+
+    if (about.getBoundingClientRect().top < 200 && !missions.about) {
+        missions.about = true;
+        document.getElementById("m1").innerHTML = "✅ Buka About";
+    }
+
+    if (exp.getBoundingClientRect().top < 200 && !missions.experience) {
+        missions.experience = true;
+        document.getElementById("m2").innerHTML = "✅ Lihat Experience";
+    }
+
+    if (contact.getBoundingClientRect().top < 200 && !missions.contact) {
+        missions.contact = true;
+        document.getElementById("m3").innerHTML = "✅ Klik Contact";
+    }
+
+});
+        
         let scene, camera, renderer, globe, starField;
         let mouseX = 0, mouseY = 0;
 
@@ -926,6 +978,42 @@ document.getElementById('installBtn').addEventListener('click', async () => {
 function closeInstall() {
     document.getElementById('installPopup').classList.add('hidden');
     }
+
+        // SPLASH SCREEN
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.getElementById("splashScreen").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("splashScreen").style.display = "none";
+        }, 500);
+    }, 2000);
+});
+        // LOADING EFFECT SAAT PINDAH SECTION
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", () => {
+        const loading = document.getElementById("loadingScreen");
+        loading.classList.remove("hidden");
+
+        setTimeout(() => {
+            loading.classList.add("hidden");
+        }, 800);
+    });
+});
+        document.getElementById("installBtn").addEventListener("click", async () => {
+
+    document.getElementById("installSound").play(); // 🔊 SOUND
+
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+    } else {
+        alert("iPhone: Share → Add to Home Screen");
+    }
+});
+        
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+    document.body.classList.add("app-mode");
+}
     </script>
 </body>
     
