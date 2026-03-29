@@ -254,7 +254,7 @@
         <!-- CLOSE -->
         <button onclick="closeInstall()" class="absolute top-3 right-4 text-lg">✕</button>
 
-        <img src="/icon-192.png" class="w-16 h-16 mx-auto mb-4 rounded-2xl">
+        <img src="/Almufid-Official.png" class="w-16 h-16 mx-auto mb-4 rounded-2xl">
 
         <h3 class="font-black text-lg mb-2">Install Mufid App 🚀</h3>
         <p class="text-sm text-slate-500 mb-5">
@@ -942,42 +942,64 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1600);
     }
 
-    // =========================
-    // INSTALL PWA
-    // =========================
-    let deferredPrompt = null;
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
+// =========================
+// INSTALL PWA (FIX FINAL)
+// =========================
+let deferredPrompt = null;
 
-        setTimeout(() => {
-            document.getElementById('installPopup')?.classList.remove('hidden');
-        }, 2000);
-    });
+// DETECT INSTALL PROMPT
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
 
-    const installBtn = document.getElementById("installBtn");
+    setTimeout(() => {
+        document.getElementById('installPopup')?.classList.remove('hidden');
+    }, 2000);
+});
 
-    if (installBtn) {
-        installBtn.addEventListener("click", async () => {
+// AMBIL ELEMENT BUTTON
+const installBtn = document.getElementById("installBtn");
+const installSound = document.getElementById("installSound");
 
-            document.getElementById("installSound")?.play();
+// CLICK INSTALL
+if (installBtn) {
+    installBtn.addEventListener("click", async () => {
 
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                closeInstall();
+        // PLAY SOUND (AMAN)
+        try {
+            await installSound?.play();
+        } catch (e) {
+            console.log("Audio blocked:", e);
+        }
+
+        // ANDROID INSTALL
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+
+            const { outcome } = await deferredPrompt.userChoice;
+
+            if (outcome === 'accepted') {
+                console.log("User installed app ✅");
             } else {
-                alert("iPhone: Share → Add to Home Screen 📲");
+                console.log("User canceled install ❌");
             }
-        });
-    }
 
-    window.closeInstall = function () {
-        document.getElementById('installPopup')?.classList.add('hidden');
-    }
+            deferredPrompt = null;
+            closeInstall();
 
+        } else {
+            // IOS / FALLBACK
+            alert("📲 iPhone:\nTap Share → Add to Home Screen");
+        }
+    });
+}
+
+// CLOSE POPUP
+function closeInstall() {
+    document.getElementById('installPopup')?.classList.add('hidden');
+}
+    
     // =========================
     // SPLASH SCREEN
     // =========================
