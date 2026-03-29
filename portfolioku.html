@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rodhi Faisal Mufid | Portfolio</title>
@@ -229,6 +231,25 @@
         </button>
     </header>
 
+<div id="installTopBanner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 w-[92%] max-w-md z-[9999]">
+    
+    <div class="flex items-center justify-between glass-card px-4 py-3 shadow-xl rounded-2xl">
+        
+        <div class="flex items-center gap-3">
+            <img src="/icon-192.png" class="w-10 h-10 rounded-xl">
+            <div>
+                <p class="font-bold text-sm">Install Mufid App</p>
+                <p class="text-xs text-slate-500">mufid.hinaitech.com</p>
+            </div>
+        </div>
+
+        <button id="installBtnTop" class="text-indigo-600 font-bold text-sm">
+            Instal
+        </button>
+
+    </div>
+</div>
+    
     <!-- Nav -->
     <nav class="bottom-nav">
         <a href="#home" class="nav-icon-btn active"><i data-lucide="home"></i></a>
@@ -855,6 +876,32 @@ window.onload = () => {
 
     showNotifs(); // 🔥 ini tambahan
 };
+        // REGISTER SERVICE WORKER
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log("SW Registered"));
+}
+
+
+// INSTALL PROMPT
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    document.getElementById('installTopBanner').classList.remove('hidden');
+});
+
+document.getElementById('installBtnTop').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+    document.getElementById('installTopBanner').style.display = 'none';
+});
     </script>
 </body>
     
