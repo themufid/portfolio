@@ -783,39 +783,31 @@
 <div id="loadingScreen" class="hidden fixed inset-0 z-[99998] bg-black/80 flex items-center justify-center text-white">
     <p class="animate-pulse text-lg">Loading...</p>
 </div>
-  <!-- MISSION BOX -->
-<div id="missionBox" class="fixed bottom-6 left-6 z-[9999] glass-card p-4 rounded-2xl text-xs">
-    🎯 Mission:
-    <ul class="mt-2 space-y-1">
+<!-- MISSION BOX FIX -->
+<div id="missionBox"
+     style="
+     position:fixed;
+     bottom:20px;
+     left:20px;
+     z-index:999999;
+     background:rgba(0,0,0,0.8);
+     color:white;
+     padding:15px;
+     border-radius:15px;
+     font-size:12px;
+     max-width:200px;
+     box-shadow:0 10px 30px rgba(0,0,0,0.3);
+     ">
+
+    <b>🎯 Mission</b>
+    <ul style="margin-top:8px;line-height:1.6">
         <li id="m1">❌ Buka About</li>
         <li id="m2">❌ Lihat Experience</li>
         <li id="m3">❌ Klik Contact</li>
     </ul>
-</div>  
+</div>
     <script>
-const about = document.getElementById("about");
-const exp = document.getElementById("experience");
-const contact = document.getElementById("contact");
 
-window.addEventListener("scroll", () => {
-
-    if (about.getBoundingClientRect().top < 200 && !missions.about) {
-        missions.about = true;
-        document.getElementById("m1").innerHTML = "✅ Buka About";
-    }
-
-    if (exp.getBoundingClientRect().top < 200 && !missions.experience) {
-        missions.experience = true;
-        document.getElementById("m2").innerHTML = "✅ Lihat Experience";
-    }
-
-    if (contact.getBoundingClientRect().top < 200 && !missions.contact) {
-        missions.contact = true;
-        document.getElementById("m3").innerHTML = "✅ Klik Contact";
-    }
-
-});
-        
         let scene, camera, renderer, globe, starField;
         let mouseX = 0, mouseY = 0;
 
@@ -1014,6 +1006,42 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         if (window.matchMedia('(display-mode: standalone)').matches) {
     document.body.classList.add("app-mode");
 }
+        // ===== DEBUG MISSION =====
+console.log("Mission script jalan");
+
+// pastikan element ada
+setTimeout(() => {
+
+    const m1 = document.getElementById("m1");
+    const m2 = document.getElementById("m2");
+    const m3 = document.getElementById("m3");
+
+    if (!m1 || !m2 || !m3) {
+        console.error("Mission element tidak ditemukan!");
+        return;
+    }
+
+    const about = document.getElementById("about");
+    const exp = document.getElementById("experience");
+    const contact = document.getElementById("contact");
+
+    window.addEventListener("scroll", () => {
+
+        if (about && about.getBoundingClientRect().top < 200) {
+            m1.innerHTML = "✅ Buka About";
+        }
+
+        if (exp && exp.getBoundingClientRect().top < 200) {
+            m2.innerHTML = "✅ Lihat Experience";
+        }
+
+        if (contact && contact.getBoundingClientRect().top < 200) {
+            m3.innerHTML = "✅ Klik Contact";
+        }
+
+    });
+
+}, 1000);
     </script>
 </body>
     
