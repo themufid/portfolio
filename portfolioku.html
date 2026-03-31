@@ -221,6 +221,52 @@
 .app-mode body {
     padding-top: 10px;
 }
+        /* =========================
+   MARQUEE 3D TEXT
+========================= */
+.marquee-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.marquee-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marqueeMove 6s linear infinite;
+
+    font-weight: 900;
+
+    /* GRADIENT COLOR */
+    background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #6366f1);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* 3D EFFECT */
+    text-shadow: 
+        0 2px 0 rgba(0,0,0,0.1),
+        0 4px 10px rgba(99,102,241,0.4),
+        0 8px 20px rgba(168,85,247,0.4);
+
+    animation: marqueeMove 6s linear infinite, gradientShift 4s ease infinite;
+}
+
+/* GERAK KE SAMPING */
+@keyframes marqueeMove {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* WARNA BERGERAK */
+@keyframes gradientShift {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+}
     </style>
 </head>
 <body class="light-mode">
@@ -291,9 +337,17 @@
                 Software Engineer & Tech Educator
             </h2>
 
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-none">
-                Faisal <br><span class="gradient-text">Mufid.</span>
-            </h1>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-none overflow-hidden">
+    
+           <!-- STATIC -->
+            <span class="block">Faisal</span>
+
+           <!-- MOVING TEXT -->
+           <div class="marquee-wrapper">
+             <span class="marquee-text">Mufid.</span>
+           </div>
+
+           </h1>
 
             <p class="text-lg text-slate-500 dark:text-slate-400 mb-6 max-w-md">
                 I bring a forward thinking perspective and consider long term objectives to enhance projects.
