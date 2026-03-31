@@ -327,8 +327,9 @@
     <main class="pt-32 pb-40 px-6 max-w-6xl mx-auto">
         
         <!-- Hero -->
-<section id="home" class="min-h-[80vh] flex items-center">
-    
+<!-- Hero -->
+<section id="home" class="min-h-[80vh] flex items-center relative z-[1]">
+      
     <div class="grid md:grid-cols-2 gap-10 items-center w-full">
 
         <!-- LEFT TEXT -->
@@ -337,85 +338,55 @@
                 Software Engineer & Tech Educator
             </h2>
 
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-none overflow-hidden">
-    
-           <!-- STATIC -->
-            <span class="block">Faisal</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-none">
+                
+                <!-- STATIC -->
+                <span class="block">Faisal</span>
 
-           <!-- MOVING TEXT -->
-           <div class="marquee-wrapper">
-             <span class="marquee-text">Mufid.</span>
-           </div>
+                <!-- MOVING TEXT -->
+                <div class="marquee-wrapper overflow-hidden">
+                    <span class="marquee-text">Mufid.</span>
+                </div>
 
-           </h1>
+            </h1>
 
-            <p class="text-lg text-slate-500 dark:text-slate-400 mb-6 max-w-md">
+            <p class="text-lg text-slate-500 dark:text-slate-400 mb-8 max-w-md">
                 I bring a forward thinking perspective and consider long term objectives to enhance projects.
             </p>
 
-            <!-- PERSONAL INFO -->
-            <div class="text-slate-600 dark:text-slate-400 text-sm mb-6 space-y-2">
-                <p>📍 Lahir di Trisnomaju, tinggal dan beraktivitas di Bandar Lampung</p>
-                
-                <p>🎓 Pendidikan:</p>
-                <ul class="list-disc ml-5">
-                    <li>S1: Teknik Informatika</li>
-                </ul>
-
-                <p>🚀 Founder & CEO di <span class="font-semibold text-indigo-600">PT. Heroic Inovasi Nusantara</span>, 
-                telah menangani ratusan klien aktif dari berbagai daerah dan negara (lokal & internasional).</p>
-            </div>
-
-            <!-- 🔥 ANIMATED COUNTER -->
-            <div class="grid grid-cols-3 gap-4 mb-8 text-center">
-                
-                <div class="glass-card p-4 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-indigo-600 counter" data-target="100">0</h3>
-                    <p class="text-xs text-slate-500">Clients</p>
-                </div>
-
-                <div class="glass-card p-4 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-indigo-600 counter" data-target="50">0</h3>
-                    <p class="text-xs text-slate-500">Projects</p>
-                </div>
-
-                <div class="glass-card p-4 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-indigo-600 counter" data-target="5">0</h3>
-                    <p class="text-xs text-slate-500">Countries</p>
-                </div>
-
-            </div>
-
+            <!-- BUTTON -->
             <div class="flex gap-4">
                 
-                <a href="#contact" 
+                <a href="#contact"   
                    class="w-1/2 md:w-auto flex-1 text-center bg-indigo-600 text-white px-6 py-4 rounded-2xl font-bold shadow-xl hover:scale-105 transition-all">
                     Hubungi Saya
                 </a>
-            
-                <a href="https://Lynk.id/almufid" 
-                   target="_blank"
+              
+                <a href="https://Lynk.id/almufid"   
+                   target="_blank"  
                    class="w-1/2 md:w-auto flex-1 justify-center glass-card px-6 py-4 hover:bg-white transition-all shadow-md flex items-center gap-2 font-bold">
                     <i data-lucide="external-link"></i> Digital Product
                 </a>
-            
+              
             </div>
         </div>
 
         <!-- RIGHT IMAGE -->
         <div class="flex justify-center md:justify-end" data-aos="fade-left">
-            
+              
             <div class="relative group">
 
+                <!-- Glow -->
                 <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 blur-3xl opacity-30 group-hover:opacity-50 transition-all"></div>
 
+                <!-- Frame -->
                 <div class="relative glass-card p-3 rounded-3xl shadow-2xl transform transition-all duration-500 group-hover:rotate-1 group-hover:scale-105">
 
-                 <img 
-                    src="portfolio-hero.png"
-                    alt="Faisal Mufid"
-                    class="rounded-2xl w-[260px] md:w-[320px] object-cover shadow-2xl border border-white/20"
-                />
+                    <img   
+                        src="portfolio-hero.png"  
+                        alt="Faisal Mufid"  
+                        class="rounded-2xl w-[260px] md:w-[320px] object-cover shadow-2xl border border-white/20"
+                    />
 
                 </div>
 
@@ -426,31 +397,51 @@
     </div>
 
 </section>
+        
+<!-- About -->
+<section id="about" class="py-24">
+    <div class="glass-card p-12" data-aos="fade-up">
+        <h3 class="text-3xl font-black mb-8">About Me</h3>
 
-        <!-- About -->
-        <section id="about" class="py-24">
-            <div class="glass-card p-12" data-aos="fade-up">
-                <h3 class="text-3xl font-black mb-8">About Me</h3>
-                <div class="grid md:grid-cols-2 gap-12">
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        I'm Rodhi Faisal Mufid. My dual passion for education and technology drives me to create meaningful digital solutions. I am confident that my perseverance, strong work ethic, attention to detail, and problem-solving skills contribute greatly to achieving goals.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4 text-sm font-bold">
-                            <i data-lucide="map-pin" class="text-indigo-600"></i> Bandar Lampung, Indonesia
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <a href="https://hinaitech.com" target="_blank" class="flex items-center gap-4 text-sm font-bold hover:text-indigo-600 transition-all">
-                                <i data-lucide="globe" class="text-indigo-600"></i> hinaitech.com
-                            </a>
-                            <a href="https://yaedudigital.my.id" target="_blank" class="flex items-center gap-4 text-sm font-bold hover:text-indigo-600 transition-all">
-                                <i data-lucide="link" class="text-indigo-600"></i> yaedudigital.my.id
-                            </a>
-                        </div>
-                    </div>
+        <div class="grid md:grid-cols-2 gap-12">
+
+            <!-- LEFT TEXT -->
+            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                I'm Rodhi Faisal Mufid. My dual passion for education and technology drives me to create meaningful digital solutions. 
+                I am confident that my perseverance, strong work ethic, attention to detail, and problem-solving skills contribute greatly to achieving goals.
+                <br><br>
+                I was born in Trisnomaju and currently live and work in Bandar Lampung. 
+                Pendidikan: S1 Teknik Informatika. 
+                I am also the Founder & CEO of <span class="font-semibold text-indigo-600">PT. Heroic Inovasi Nusantara</span>, 
+                where I have successfully handled hundreds of active clients from various regions and countries, both local and international.
+            </p>
+
+            <!-- RIGHT INFO -->
+            <div class="space-y-4">
+
+                <div class="flex items-center gap-4 text-sm font-bold">
+                    <i data-lucide="map-pin" class="text-indigo-600"></i> Bandar Lampung, Indonesia
                 </div>
+
+                <div class="flex flex-col gap-3">
+
+                    <a href="https://hinaitech.com" target="_blank" 
+                       class="flex items-center gap-4 text-sm font-bold hover:text-indigo-600 transition-all">
+                        <i data-lucide="globe" class="text-indigo-600"></i> hinaitech.com
+                    </a>
+
+                    <a href="https://yaedudigital.my.id" target="_blank" 
+                       class="flex items-center gap-4 text-sm font-bold hover:text-indigo-600 transition-all">
+                        <i data-lucide="link" class="text-indigo-600"></i> yaedudigital.my.id
+                    </a>
+
+                </div>
+
             </div>
-        </section>
+
+        </div>
+    </div>
+</section>
 
         <!-- Layanan Unggulan -->
 <section id="experience" class="py-24">
