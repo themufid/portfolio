@@ -267,6 +267,78 @@
     0% { background-position: 0%; }
     100% { background-position: 200%; }
 }
+        /* === LOGO 3D M === */
+.logo-3d {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, #6366f1, #9333ea, #ec4899);
+    box-shadow: 
+        0 8px 20px rgba(99,102,241,0.4),
+        inset 0 2px 6px rgba(255,255,255,0.3);
+    overflow: hidden;
+    animation: glowPulse 3s infinite ease-in-out;
+}
+
+/* TEXT M */
+.logo-3d span {
+    font-weight: 900;
+    font-size: 18px;
+    color: white;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.4),
+        0 0 10px rgba(255,255,255,0.6);
+    transform: translateZ(10px);
+}
+
+/* GLOW ANIMATION */
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 
+            0 8px 20px rgba(99,102,241,0.4),
+            0 0 10px rgba(168,85,247,0.4);
+    }
+    50% {
+        box-shadow: 
+            0 12px 30px rgba(168,85,247,0.6),
+            0 0 20px rgba(236,72,153,0.6);
+    }
+}
+
+/* ✨ SPARKLE EFFECT */
+.logo-3d::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255,255,255,0.7),
+        transparent 70%
+    );
+    transform: rotate(25deg) translateX(-120%);
+    animation: sparkleMove 3s infinite;
+}
+
+/* SPARKLE ANIMATION */
+@keyframes sparkleMove {
+    0% {
+        transform: rotate(25deg) translateX(-120%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(25deg) translateX(120%);
+        opacity: 0;
+    }
+}
     </style>
 </head>
 <body class="light-mode">
@@ -287,8 +359,8 @@ bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
 
     <!-- LOGO -->
     <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">
-            M
+        <div class="logo-3d">
+          <span>M</span>
         </div>
         <span class="font-black text-lg tracking-tight text-slate-800 dark:text-white">
             
