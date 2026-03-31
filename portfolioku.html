@@ -421,18 +421,18 @@
     animation-duration: 2s;
 }
 
-        /* =========================
-CHATBOT UI PRO
+/* =========================
+CHATBOT MUFID AI
 ========================= */
 
 #chatbot-toggle {
     position: fixed;
-    bottom: 100px;
+    bottom: 110px;
     right: 20px;
     width: 65px;
     height: 65px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #9333ea, #ec4899);
+    background: linear-gradient(135deg,#6366f1,#9333ea,#ec4899);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -441,12 +441,13 @@ CHATBOT UI PRO
     cursor: pointer;
     z-index: 9999;
     box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    animation: floatBtn 3s infinite ease-in-out;
+    animation: float 3s infinite ease-in-out;
 }
 
+/* CHAT BOX */
 #chatbot-box {
     position: fixed;
-    bottom: 180px;
+    bottom: 190px;
     right: 20px;
     width: 340px;
     height: 460px;
@@ -454,9 +455,10 @@ CHATBOT UI PRO
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(20px);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+    animation: fadeInUp 0.4s ease;
     z-index: 9999;
 }
 
@@ -467,7 +469,7 @@ CHATBOT UI PRO
 /* HEADER */
 .chat-header {
     padding: 12px;
-    background: linear-gradient(135deg, #6366f1, #9333ea);
+    background: linear-gradient(135deg,#6366f1,#9333ea);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -477,7 +479,7 @@ CHATBOT UI PRO
 /* BODY */
 #chatbot-messages {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     overflow-y: auto;
     font-size: 14px;
 }
@@ -488,6 +490,7 @@ CHATBOT UI PRO
     padding: 10px;
     border-radius: 12px;
     max-width: 80%;
+    animation: fadeMsg 0.3s ease;
 }
 
 .user {
@@ -510,6 +513,7 @@ CHATBOT UI PRO
     flex: 1;
     padding: 10px;
     border: none;
+    outline: none;
 }
 
 .chat-input button {
@@ -520,11 +524,20 @@ CHATBOT UI PRO
 }
 
 /* ANIMATION */
-@keyframes floatBtn {
+@keyframes float {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
-        
+
+@keyframes fadeInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeMsg {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}      
     </style>
 </head>
 <body class="light-mode">
@@ -1178,31 +1191,34 @@ bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
     
     <!-- NOTIFICATION CONTAINER -->
     <div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
-   <!-- =========================
-🤖 AI SALES CHATBOT PRO
+
+    <!-- =========================
+🤖 CHATBOT MUFID AI
 ========================= -->
 
 <div id="chatbot-container">
 
     <!-- FLOAT BUTTON -->
-    <div id="chatbot-toggle">💬</div>
+    <div id="chatbot-toggle">
+        💬
+    </div>
 
     <!-- CHAT BOX -->
     <div id="chatbot-box" class="hidden">
         
         <!-- HEADER -->
         <div class="chat-header">
-            <span>AI Assistant</span>
-            <button onclick="toggleChat()">✕</button>
+            <span>🤖 Mufid AI</span>
+            <button id="closeChat">✕</button>
         </div>
 
-        <!-- BODY -->
+        <!-- CHAT BODY -->
         <div id="chatbot-messages"></div>
 
         <!-- INPUT -->
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Tanya sesuatu...">
-            <button onclick="sendMessage()">➤</button>
+            <button id="sendBtn">Kirim</button>
         </div>
 
     </div>
@@ -1425,6 +1441,159 @@ function closeInstall() {
         });
     });
 
+// =========================
+// STATE
+// =========================
+let chatMemory = JSON.parse(localStorage.getItem("chatMemory")) || [];
+let interestScore = parseInt(localStorage.getItem("interestScore")) || 0;
+
+// =========================
+// ELEMENT
+// =========================
+const toggleBtn = document.getElementById("chatbot-toggle");
+const chatBox = document.getElementById("chatbot-box");
+const closeBtn = document.getElementById("closeChat");
+
+// =========================
+// OPEN CHAT
+// =========================
+toggleBtn.onclick = () => {
+    chatBox.classList.remove("hidden");
+
+    // UCAPAN AWAL (hanya sekali)
+    if (chatMemory.length === 0) {
+        addMessage("Selamat Datang di Chatbot buatan Mufid 👋\nJika ada pertanyaan silahkan ajukan ya...", "bot");
+    }
+};
+
+// =========================
+// CLOSE CHAT
+// =========================
+closeBtn.onclick = () => {
+    chatBox.classList.add("hidden");
+};
+
+// =========================
+// ADD MESSAGE
+// =========================
+function addMessage(text, sender) {
+    const msg = document.createElement("div");
+    msg.className = "msg " + sender;
+    msg.innerText = text;
+
+    document.getElementById("chatbot-messages").appendChild(msg);
+    msg.scrollIntoView();
+
+    chatMemory.push({ text, sender });
+    localStorage.setItem("chatMemory", JSON.stringify(chatMemory));
+}
+
+// =========================
+// SEND
+// =========================
+document.getElementById("sendBtn").onclick = sendMessage;
+
+function sendMessage() {
+    const input = document.getElementById("chatInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    input.value = "";
+
+    setTimeout(() => {
+        const reply = AIResponse(text);
+        addMessage(reply, "bot");
+    }, 600);
+}
+
+// ENTER
+document.getElementById("chatInput").addEventListener("keypress", e => {
+    if (e.key === "Enter") sendMessage();
+});
+
+// =========================
+// 🤖 AI RESPONSE (SMART)
+// =========================
+function AIResponse(input) {
+    input = input.toLowerCase();
+
+    // TRACK MINAT
+    if (input.match(/harga|order|jasa|buat|bikin/)) {
+        interestScore++;
+        localStorage.setItem("interestScore", interestScore);
+    }
+
+    // AUTO CLOSING
+    if (interestScore >= 3) {
+        setTimeout(() => {
+            addMessage("🔥 Sepertinya kamu serius, saya bantu langsung ke WhatsApp ya biar cepat deal 👇", "bot");
+            setTimeout(() => {
+                window.open("https://wa.me/628XXXXXXXXXX", "_blank");
+            }, 1500);
+        }, 1200);
+    }
+
+    // =========================
+    // LAYANAN UTAMA
+    // =========================
+
+    if (input.includes("website")) {
+        return "Saya bisa bantu pembuatan Website Company Profile, Landing Page, hingga Web App profesional 🚀";
+    }
+
+    if (input.includes("landing page")) {
+        return "Landing Page saya fokus ke conversion tinggi + desain modern 🔥";
+    }
+
+    if (input.includes("seo") || input.includes("artikel")) {
+        return "Saya menyediakan jasa Artikel SEO agar ranking di Google dan mendatangkan traffic 📈";
+    }
+
+    if (input.includes("desain")) {
+        return "Saya juga menyediakan UI/UX Design modern (Figma hingga production ready 🎨)";
+    }
+
+    if (input.includes("ai") || input.includes("machine learning")) {
+        return "Saya bisa bantu AI Automation, Machine Learning, hingga sistem pintar berbasis data 🤖";
+    }
+
+    if (input.includes("data science")) {
+        return "Layanan Data Science meliputi analisis data, dashboard, hingga predictive system 📊";
+    }
+
+    if (input.includes("ketik")) {
+        return "Saya juga menyediakan jasa ketik profesional dan pengolahan dokumen 📄";
+    }
+
+    // =========================
+    // UMUM
+    // =========================
+
+    if (input.includes("halo") || input.includes("hai")) {
+        return "Halo 👋 Ada yang bisa saya bantu hari ini?";
+    }
+
+    if (input.includes("harga")) {
+        return "Harga fleksibel sesuai kebutuhan 👍 Mau saya bantu rekomendasikan?";
+    }
+
+    if (input.includes("kontak")) {
+        return "Silahkan klik tombol WhatsApp ya untuk konsultasi langsung 📲";
+    }
+
+    if (input.includes("siapa")) {
+        return "Saya adalah AI Assistant dari Rodhi Faisal Mufid 😎";
+    }
+
+    // CONTEXT
+    if (chatMemory.length > 4) {
+        return "Saya mulai memahami kebutuhan kamu 👍 Bisa dijelaskan target atau tujuan kamu?";
+    }
+
+    return "Menarik 🤔 Bisa dijelaskan lebih detail supaya saya bantu lebih tepat?";
+}
+
     // =========================
     // APP MODE
     // =========================
@@ -1449,132 +1618,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
 }
     
-// =========================
-// STATE
-// =========================
-let chatMemory = JSON.parse(localStorage.getItem("chatMemory")) || [];
-let interestScore = parseInt(localStorage.getItem("interestScore")) || 0;
 
-// =========================
-// TOGGLE
-// =========================
-function toggleChat() {
-    document.getElementById("chatbot-box").classList.toggle("hidden");
-}
-
-// =========================
-// MESSAGE UI
-// =========================
-function addMessage(text, sender) {
-    const msg = document.createElement("div");
-    msg.className = "msg " + sender;
-    msg.innerText = text;
-
-    document.getElementById("chatbot-messages").appendChild(msg);
-    msg.scrollIntoView();
-
-    // SAVE MEMORY
-    chatMemory.push({ text, sender });
-    localStorage.setItem("chatMemory", JSON.stringify(chatMemory));
-}
-
-// =========================
-// LOAD MEMORY
-// =========================
-window.onload = () => {
-    chatMemory.forEach(m => addMessage(m.text, m.sender));
-};
-
-// =========================
-// SEND MESSAGE
-// =========================
-function sendMessage() {
-    const input = document.getElementById("chatInput");
-    const text = input.value.trim();
-    if (!text) return;
-
-    addMessage(text, "user");
-    input.value = "";
-
-    setTimeout(() => {
-        const reply = smartAI(text);
-        addMessage(reply, "bot");
-    }, 600);
-}
-
-// =========================
-// 🧠 SMART AI + CONTEXT
-// =========================
-function smartAI(input) {
-    input = input.toLowerCase();
-
-    // TRACK MINAT
-    if (
-        input.includes("harga") ||
-        input.includes("paket") ||
-        input.includes("order") ||
-        input.includes("jasa")
-    ) {
-        interestScore++;
-        localStorage.setItem("interestScore", interestScore);
-    }
-
-    // AUTO FOLLOW UP
-    setTimeout(() => {
-        if (interestScore >= 1) {
-            addMessage("BTW, kamu lagi butuh untuk bisnis apa atau personal?", "bot");
-        }
-    }, 4000);
-
-    // AUTO CLOSING
-    if (interestScore >= 3) {
-        setTimeout(() => {
-            addMessage("🔥 Sepertinya kamu serius, saya bantu langsung ya ke WhatsApp biar cepat deal 👇", "bot");
-
-            setTimeout(() => {
-                window.open("https://wa.me/628XXXXXXXXXX", "_blank");
-            }, 2000);
-
-        }, 1500);
-    }
-
-    // RESPONSE LOGIC
-    if (input.includes("halo") || input.includes("hai")) {
-        return "Halo 👋 Saya AI Assistant. Mau bantu apa hari ini?";
-    }
-
-    if (input.includes("website")) {
-        return "Saya bisa bantu website profesional + SEO + auto closing 🔥";
-    }
-
-    if (input.includes("ai")) {
-        return "AI Automation bisa bantu bisnis auto closing & hemat waktu 🚀";
-    }
-
-    if (input.includes("harga")) {
-        return "Harga fleksibel tergantung kebutuhan. Mau saya arahkan ke solusi terbaik?";
-    }
-
-    if (input.includes("jasa")) {
-        return "Saya ada layanan: Website, AI Automation, Meta Ads, dan Sistem Digital.";
-    }
-
-    if (input.includes("siapa kamu")) {
-        return "Saya AI Assistant milik Rodhi Faisal Mufid 😎";
-    }
-
-    // CONTEXT MEMORY RESPONSE
-    if (chatMemory.length > 3) {
-        return "Saya paham arah pembicaraan kita 👍 Bisa jelaskan goal kamu biar saya bantu lebih tepat?";
-    }
-
-    return "Menarik 🤔 Bisa jelaskan lebih detail?";
-}
-
-// ENTER
-document.getElementById("chatInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") sendMessage();
-});
 </script>
 
 </body>
