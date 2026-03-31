@@ -285,30 +285,32 @@
         inset 0 2px 6px rgba(255,255,255,0.3);
     overflow: hidden;
 
-    /* 🔥 COMBINE ANIMATION */
     animation: glowPulse 3s infinite ease-in-out;
-
-    /* ✅ BIAR SMOOTH HOVER */
     transition: all 0.35s ease;
 }
 
 /* =========================
-   TEXT M (ORBIT + 3D)
+   TEXT M (FIXED + ROTATE)
 ========================= */
 .logo-3d span {
     font-weight: 900;
     font-size: 18px;
     color: white;
-    position: absolute;
+    position: relative;
+    z-index: 2;
 
-    /* 🔥 ORBIT + GLOW */
-    animation: orbitMove 4s linear infinite;
+    /* 🔥 PUTAR DI TEMPAT (BUKAN GESER) */
+    animation: rotateM 6s linear infinite;
 
     text-shadow:
         0 2px 4px rgba(0,0,0,0.4),
         0 0 10px rgba(255,255,255,0.6);
+}
 
-    transform: translateZ(10px);
+/* 🔄 ROTATE M */
+@keyframes rotateM {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
 /* =========================
@@ -328,32 +330,69 @@
 }
 
 /* =========================
-   ORBIT MOVEMENT (HALUS)
+   ORBIT RING (LINGKARAN)
 ========================= */
-@keyframes orbitMove {
-    0%   { transform: translate(0px, -4px); }
-    25%  { transform: translate(3px, -3px); }
-    50%  { transform: translate(4px, 0px); }
-    75%  { transform: translate(3px, 3px); }
-    100% { transform: translate(0px, 4px); }
+.logo-3d::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+
+    animation: orbitRotate 5s linear infinite;
+}
+
+/* =========================
+   TITIK CAHAYA (MUTER)
+========================= */
+.logo-3d::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,255,255,0.9);
+
+    top: 50%;
+    left: 50%;
+
+    transform-origin: center;
+    animation: orbitLight 5s linear infinite;
+}
+
+/* 🔄 ROTATE ORBIT */
+@keyframes orbitRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* 🔄 CAHAYA MUTER (LINGKARAN SEMPURNA) */
+@keyframes orbitLight {
+    0%   { transform: rotate(0deg) translate(0, -18px); }
+    25%  { transform: rotate(90deg) translate(0, -18px); }
+    50%  { transform: rotate(180deg) translate(0, -18px); }
+    75%  { transform: rotate(270deg) translate(0, -18px); }
+    100% { transform: rotate(360deg) translate(0, -18px); }
 }
 
 /* =========================
    ✨ SPARKLE EFFECT
 ========================= */
-.logo-3d::before {
-    content: "";
+.logo-3d .sparkle {
     position: absolute;
     width: 120%;
     height: 120%;
     background: linear-gradient(
         120deg,
         transparent 30%,
-        rgba(255,255,255,0.7),
+        rgba(255,255,255,0.6),
         transparent 70%
     );
     transform: rotate(25deg) translateX(-120%);
     animation: sparkleMove 3s infinite;
+    z-index: 1;
 }
 
 /* SPARKLE ANIMATION */
@@ -362,9 +401,7 @@
         transform: rotate(25deg) translateX(-120%);
         opacity: 0;
     }
-    50% {
-        opacity: 1;
-    }
+    50% { opacity: 1; }
     100% {
         transform: rotate(25deg) translateX(120%);
         opacity: 0;
@@ -372,17 +409,17 @@
 }
 
 /* =========================
-   HOVER EFFECT (INTERACTIVE)
+   HOVER EFFECT
 ========================= */
 .logo-3d:hover {
-    transform: scale(1.1) rotate(3deg);
+    transform: scale(1.1);
     filter: brightness(1.2);
 }
 
-/* 🔥 BONUS: HOVER = ORBIT LEBIH CEPAT */
+/* 🔥 HOVER = SPEED UP */
 .logo-3d:hover span {
-    animation-duration: 1.5s;
-    }
+    animation-duration: 2s;
+}
     </style>
 </head>
 <body class="light-mode">
@@ -402,14 +439,14 @@ flex justify-between items-center px-6 py-4
 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
 
     <!-- LOGO -->
-    <div class="flex items-center gap-3">
-        <div class="logo-3d">
-          <span>M</span>
-        </div>
-        <span class="font-black text-lg tracking-tight text-slate-800 dark:text-white">
-            
-        </span>
+<div class="flex items-center">
+    
+    <div class="logo-3d">
+        <span>M</span>
+        <div class="sparkle"></div> 
     </div>
+
+</div>
 
     <!-- DARK MODE BUTTON -->
     <button id="themeToggle" 
