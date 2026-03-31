@@ -804,29 +804,6 @@
 <div id="loadingScreen" class="hidden fixed inset-0 z-[99998] bg-black/80 flex items-center justify-center text-white">
     <p class="animate-pulse text-lg">Loading...</p>
 </div>
-<!-- MISSION BOX FIX -->
-<div id="missionBox"
-     style="
-     position:fixed;
-     bottom:20px;
-     left:20px;
-     z-index:999999;
-     background:rgba(0,0,0,0.8);
-     color:white;
-     padding:15px;
-     border-radius:15px;
-     font-size:12px;
-     max-width:200px;
-     box-shadow:0 10px 30px rgba(0,0,0,0.3);
-     ">
-
-    <b>🎯 Mission</b>
-    <ul style="margin-top:8px;line-height:1.6">
-        <li id="m1">❌ Buka About</li>
-        <li id="m2">❌ Lihat Experience</li>
-        <li id="m3">❌ Klik Contact</li>
-    </ul>
-</div>
     
     <!-- NOTIFICATION CONTAINER -->
     <div id="notif-container" class="fixed top-24 right-6 z-[9999] flex flex-col gap-4"></div>
@@ -1054,39 +1031,6 @@ function closeInstall() {
     if (window.matchMedia('(display-mode: standalone)').matches) {
         document.body.classList.add("app-mode");
     }
-
-    // =========================
-    // MISSION SYSTEM
-    // =========================
-    setTimeout(() => {
-
-        const m1 = document.getElementById("m1");
-        const m2 = document.getElementById("m2");
-        const m3 = document.getElementById("m3");
-
-        if (!m1 || !m2 || !m3) return;
-
-        const about = document.getElementById("about");
-        const exp = document.getElementById("experience");
-        const contact = document.getElementById("contact");
-
-        window.addEventListener("scroll", () => {
-
-            if (about && about.getBoundingClientRect().top < 200) {
-                m1.innerHTML = "✅ Buka About";
-            }
-
-            if (exp && exp.getBoundingClientRect().top < 200) {
-                m2.innerHTML = "✅ Lihat Experience";
-            }
-
-            if (contact && contact.getBoundingClientRect().top < 200) {
-                m3.innerHTML = "✅ Klik Contact";
-            }
-
-        });
-
-    }, 1000);
 
     // =========================
     // INIT ALL
