@@ -270,34 +270,45 @@
     </style>
 </head>
 <body class="light-mode">
+
 <!-- SPLASH SCREEN -->
 <div id="splashScreen" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black text-white">
-
     <img src="/Almufid-Official.png" class="w-24 mb-6 animate-pulse">
-
     <h1 class="text-2xl font-black mb-2">Mufid App</h1>
     <p class="text-sm text-slate-400">Loading Experience...</p>
-
 </div>
-    <div id="canvas-container"></div>
 
-    <!-- Header -->
-    <header class="top-nav">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">M</div>
-            <span class="font-black text-xl tracking-tighter"></span>
+<div id="canvas-container"></div>
+
+<!-- ✅ HEADER FIX (SATU SAJA + FULL BACKGROUND) -->
+<header class="fixed top-0 left-0 w-full z-[9999] 
+flex justify-between items-center px-6 py-4 
+bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
+
+    <!-- LOGO -->
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">
+            M
         </div>
-        <button id="themeToggle" class="p-3 bg-white/50 dark:bg-slate-800/50 rounded-full shadow-lg transition-all">
-            <i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>
-        </button>
-    </header>
+        <span class="font-black text-lg tracking-tight text-slate-800 dark:text-white">
+            Mufid
+        </span>
+    </div>
 
-<!-- INSTALL POPUP CENTER -->
+    <!-- DARK MODE BUTTON -->
+    <button id="themeToggle" 
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 shadow-lg transition-all hover:scale-110">
+        <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-slate-700 dark:text-white"></i>
+    </button>
+
+</header>
+
+
+<!-- INSTALL POPUP -->
 <div id="installPopup" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
 
     <div class="glass-card p-6 rounded-3xl w-[90%] max-w-sm text-center relative">
 
-        <!-- CLOSE -->
         <button onclick="closeInstall()" class="absolute top-3 right-4 text-lg">✕</button>
 
         <img src="/Almufid-Official.png" class="w-16 h-16 mx-auto mb-4 rounded-2xl">
@@ -313,33 +324,19 @@
 
     </div>
 </div>
-    
-    <!-- Nav -->
-    <nav class="bottom-nav">
-        <a href="#home" class="nav-icon-btn active"><i data-lucide="home"></i></a>
-        <a href="#about" class="nav-icon-btn"><i data-lucide="user"></i></a>
-        <a href="#experience" class="nav-icon-btn"><i data-lucide="briefcase"></i></a>
-        <a href="#skills" class="nav-icon-btn"><i data-lucide="code"></i></a>
-        <a href="#achievements" class="nav-icon-btn"><i data-lucide="award"></i></a>
-        <a href="#contact" class="nav-icon-btn"><i data-lucide="mail"></i></a>
-    </nav>
 
-    <main class="pt-32 pb-40 px-6 max-w-6xl mx-auto">
-        
-        <!-- HEADER / NAVBAR -->
-<header class="fixed top-0 left-0 w-full z-[9999] flex justify-between items-center px-6 py-4">
 
-    <!-- LOGO M -->
-    <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-lg">
-        M
-    </div>
+<!-- NAV -->
+<nav class="bottom-nav">
+    <a href="#home" class="nav-icon-btn active"><i data-lucide="home"></i></a>
+    <a href="#about" class="nav-icon-btn"><i data-lucide="user"></i></a>
+    <a href="#experience" class="nav-icon-btn"><i data-lucide="briefcase"></i></a>
+    <a href="#skills" class="nav-icon-btn"><i data-lucide="code"></i></a>
+    <a href="#achievements" class="nav-icon-btn"><i data-lucide="award"></i></a>
+    <a href="#contact" class="nav-icon-btn"><i data-lucide="mail"></i></a>
+</nav>
 
-    <!-- DARK MODE BUTTON -->
-    <button id="darkToggle" class="w-10 h-10 rounded-full glass-card flex items-center justify-center shadow-lg">
-        <i data-lucide="moon"></i>
-    </button>
-
-</header>
+<main class="pt-32 pb-40 px-6 max-w-6xl mx-auto">
         
 <!-- Hero -->
 <section id="home" class="min-h-[80vh] flex items-center relative z-[1]">
