@@ -15,165 +15,165 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <style>
-        :root {
-            --primary: #6366f1;
-            --bg-light: #f8fafc;
-            --glass: rgba(255, 255, 255, 0.7);
-        }
+<style>
+:root {
+    --primary: #6366f1;
+    --bg-light: #f8fafc;
+    --glass: rgba(255, 255, 255, 0.7);
+}
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-light);
-            overflow-x: hidden;
-            color: #1e293b;
-            scroll-behavior: smooth;
-        }
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-light);
+    overflow-x: hidden;
+    color: #1e293b;
+    scroll-behavior: smooth;
+}
 
-        .dark-mode {
-            --bg-light: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
-            color: #f1f5f9;
-        }
+.dark-mode {
+    --bg-light: #020617;
+    --glass: rgba(15, 23, 42, 0.8);
+    color: #f1f5f9;
+}
 
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+/* Canvas background */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
 
-        /* Navigations */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 5%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
+/* Navigations */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 5%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
 
-        .bottom-nav {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 12px 25px;
-            border-radius: 100px;
-            display: flex;
-            gap: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
+.bottom-nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 25px;
+    border-radius: 100px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
 
-        .nav-icon-btn {
-            padding: 10px;
-            border-radius: 50%;
-            color: inherit;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.nav-icon-btn {
+    padding: 10px;
+    border-radius: 50%;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .nav-icon-btn:hover, .nav-icon-btn.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-5px);
-        }
+.nav-icon-btn:hover, .nav-icon-btn.active {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-5px);
+}
 
-        /* Cards */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 32px;
-            transition: transform 0.3s ease;
-        }
+/* Cards */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 32px;
+    transition: transform 0.3s ease;
+}
 
-        .skill-icon-box {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 12px;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            width: 100px;
-            height: 100px;
-            justify-content: center;
-        }
-        .skill-icon-box:hover {
-            background: var(--primary);
-            transform: scale(1.1);
-            color: white;
-        }
-        .skill-icon-box img { width: 36px; height: 36px; object-fit: contain; }
-        .skill-icon-box span { font-size: 10px; font-weight: 800; text-align: center; }
+.skill-icon-box {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 12px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+}
+.skill-icon-box:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+    color: white;
+}
+.skill-icon-box img { width: 36px; height: 36px; object-fit: contain; }
+.skill-icon-box span { font-size: 10px; font-weight: 800; text-align: center; }
 
-        /* Accordion */
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0, 1, 0, 1);
-        }
-        .exp-card.active .collapsible-content {
-            max-height: 1000px;
-            transition: max-height 1s ease-in-out;
-        }
-        .exp-card .chevron-icon { transition: transform 0.3s ease; }
-        .exp-card.active .chevron-icon { transform: rotate(180deg); }
+/* Accordion */
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0, 1, 0, 1);
+}
+.exp-card.active .collapsible-content {
+    max-height: 1000px;
+    transition: max-height 1s ease-in-out;
+}
+.exp-card .chevron-icon { transition: transform 0.3s ease; }
+.exp-card.active .chevron-icon { transform: rotate(180deg); }
 
-        /* 3D Social Buttons */
-        .social-btn-3d {
-            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
-            transition: all 0.15s ease;
-            color: white !important; /* Ensure icons inside are white */
-        }
-        .social-btn-3d:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 0 rgba(0,0,0,0.1);
-        }
-        .social-btn-3d:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 rgba(0,0,0,0.2);
-        }
+/* 3D Social Buttons */
+.social-btn-3d {
+    box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+    transition: all 0.15s ease;
+    color: white !important;
+}
+.social-btn-3d:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 0 rgba(0,0,0,0.1);
+}
+.social-btn-3d:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
 
-        .gradient-text {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        .exp-detail-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .exp-detail-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
+/* Experience list */
+.exp-detail-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.exp-detail-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
 
-        @media (max-width: 768px) {
-            .bottom-nav { width: 95%; justify-content: space-around; gap: 5px; }
-        }
-        /* NOTIFICATION */
+/* Notifications */
 .notif {
     min-width: 280px;
     max-width: 320px;
@@ -188,89 +188,39 @@
     opacity: 0;
     transition: all 0.5s ease;
 }
-
 .notif.show {
     transform: translateX(0);
     opacity: 1;
 }
+.notif:hover { transform: scale(1.03); }
+.notif-title { font-weight: 800; font-size: 14px; }
+.notif-desc { font-size: 12px; color: #64748b; }
+.notif-close { position: absolute; top: 8px; right: 10px; cursor: pointer; }
 
-.notif:hover {
-    transform: scale(1.03);
-}
+/* App-mode adjustments */
+.app-mode .top-nav { display: none; }
+.app-mode body { padding-top: 10px; }
 
-.notif-title {
-    font-weight: 800;
-    font-size: 14px;
-}
-
-.notif-desc {
-    font-size: 12px;
-    color: #64748b;
-}
-
-.notif-close {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    cursor: pointer;
-}
-  .app-mode .top-nav {
-    display: none;
-}
-
-.app-mode body {
-    padding-top: 10px;
-}
-        /* =========================
-   MARQUEE 3D TEXT
-========================= */
-.marquee-wrapper {
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-}
-
+/* Marquee 3D text */
+.marquee-wrapper { overflow: hidden; white-space: nowrap; position: relative; }
 .marquee-text {
     display: inline-block;
     padding-left: 100%;
-    animation: marqueeMove 6s linear infinite;
-
     font-weight: 900;
-
-    /* GRADIENT COLOR */
     background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #6366f1);
     background-size: 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    /* 3D EFFECT */
     text-shadow: 
         0 2px 0 rgba(0,0,0,0.1),
         0 4px 10px rgba(99,102,241,0.4),
         0 8px 20px rgba(168,85,247,0.4);
-
     animation: marqueeMove 6s linear infinite, gradientShift 4s ease infinite;
 }
+@keyframes marqueeMove { 0%{transform:translateX(0%);} 100%{transform:translateX(-100%);} }
+@keyframes gradientShift { 0%{background-position:0%;} 100%{background-position:200%;} }
 
-/* GERAK KE SAMPING */
-@keyframes marqueeMove {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
-/* WARNA BERGERAK */
-@keyframes gradientShift {
-    0% { background-position: 0%; }
-    100% { background-position: 200%; }
-}
-        /* === LOGO 3D M === */
-/* =========================
-   LOGO 3D CONTAINER
-========================= */
+/* 3D Logo M */
 .logo-3d {
     width: 42px;
     height: 42px;
@@ -280,149 +230,69 @@
     justify-content: center;
     position: relative;
     background: linear-gradient(135deg, #6366f1, #9333ea, #ec4899);
-    box-shadow: 
-        0 8px 20px rgba(99,102,241,0.4),
-        inset 0 2px 6px rgba(255,255,255,0.3);
+    box-shadow: 0 8px 20px rgba(99,102,241,0.4), inset 0 2px 6px rgba(255,255,255,0.3);
     overflow: hidden;
-
     animation: glowPulse 3s infinite ease-in-out;
     transition: all 0.35s ease;
 }
-
-/* =========================
-   TEXT M (FIXED + ROTATE)
-========================= */
 .logo-3d span {
     font-weight: 900;
     font-size: 18px;
     color: white;
     position: relative;
     z-index: 2;
-
-    /* 🔥 PUTAR DI TEMPAT (BUKAN GESER) */
     animation: rotateM 6s linear infinite;
-
-    text-shadow:
-        0 2px 4px rgba(0,0,0,0.4),
-        0 0 10px rgba(255,255,255,0.6);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4),0 0 10px rgba(255,255,255,0.6);
 }
-
-/* 🔄 ROTATE M */
-@keyframes rotateM {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-
-/* =========================
-   GLOW ANIMATION
-========================= */
+@keyframes rotateM { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 @keyframes glowPulse {
-    0%, 100% {
-        box-shadow: 
-            0 8px 20px rgba(99,102,241,0.4),
-            0 0 10px rgba(168,85,247,0.4);
-    }
-    50% {
-        box-shadow: 
-            0 12px 30px rgba(168,85,247,0.6),
-            0 0 20px rgba(236,72,153,0.6);
-    }
+    0%,100%{ box-shadow: 0 8px 20px rgba(99,102,241,0.4), 0 0 10px rgba(168,85,247,0.4); }
+    50%{ box-shadow: 0 12px 30px rgba(168,85,247,0.6), 0 0 20px rgba(236,72,153,0.6); }
 }
-
-/* =========================
-   ORBIT RING (LINGKARAN)
-========================= */
 .logo-3d::before {
-    content: "";
-    position: absolute;
-    width: 150%;
-    height: 150%;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.25);
-
+    content:"";
+    position:absolute;
+    width:150%; height:150%;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.25);
     animation: orbitRotate 5s linear infinite;
 }
-
-/* =========================
-   TITIK CAHAYA (MUTER)
-========================= */
 .logo-3d::after {
-    content: "";
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255,255,255,0.9);
-
-    top: 50%;
-    left: 50%;
-
-    transform-origin: center;
+    content:"";
+    position:absolute;
+    width:6px;height:6px;
+    background:white;
+    border-radius:50%;
+    box-shadow:0 0 10px rgba(255,255,255,0.9);
+    top:50%; left:50%;
+    transform-origin:center;
     animation: orbitLight 5s linear infinite;
 }
-
-/* 🔄 ROTATE ORBIT */
-@keyframes orbitRotate {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-
-/* 🔄 CAHAYA MUTER (LINGKARAN SEMPURNA) */
+@keyframes orbitRotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 @keyframes orbitLight {
-    0%   { transform: rotate(0deg) translate(0, -18px); }
-    25%  { transform: rotate(90deg) translate(0, -18px); }
-    50%  { transform: rotate(180deg) translate(0, -18px); }
-    75%  { transform: rotate(270deg) translate(0, -18px); }
-    100% { transform: rotate(360deg) translate(0, -18px); }
+    0%{transform:rotate(0deg) translate(0,-18px);}
+    25%{transform:rotate(90deg) translate(0,-18px);}
+    50%{transform:rotate(180deg) translate(0,-18px);}
+    75%{transform:rotate(270deg) translate(0,-18px);}
+    100%{transform:rotate(360deg) translate(0,-18px);}
 }
-
-/* =========================
-   ✨ SPARKLE EFFECT
-========================= */
 .logo-3d .sparkle {
-    position: absolute;
-    width: 120%;
-    height: 120%;
-    background: linear-gradient(
-        120deg,
-        transparent 30%,
-        rgba(255,255,255,0.6),
-        transparent 70%
-    );
-    transform: rotate(25deg) translateX(-120%);
-    animation: sparkleMove 3s infinite;
-    z-index: 1;
+    position:absolute;
+    width:120%;
+    height:120%;
+    background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.6),transparent 70%);
+    transform:rotate(25deg) translateX(-120%);
+    animation:sparkleMove 3s infinite;
+    z-index:1;
 }
+@keyframes sparkleMove { 0%{transform:rotate(25deg) translateX(-120%);opacity:0;} 50%{opacity:1;} 100%{transform:rotate(25deg) translateX(120%);opacity:0;} }
+.logo-3d:hover { transform: scale(1.1); filter: brightness(1.2); }
+.logo-3d:hover span { animation-duration: 2s; }
 
-/* SPARKLE ANIMATION */
-@keyframes sparkleMove {
-    0% {
-        transform: rotate(25deg) translateX(-120%);
-        opacity: 0;
-    }
-    50% { opacity: 1; }
-    100% {
-        transform: rotate(25deg) translateX(120%);
-        opacity: 0;
-    }
+@media (max-width: 768px) {
+    .bottom-nav { width: 95%; justify-content: space-around; gap: 5px; }
 }
-
-/* =========================
-   HOVER EFFECT
-========================= */
-.logo-3d:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
-
-/* 🔥 HOVER = SPEED UP */
-.logo-3d:hover span {
-    animation-duration: 2s;
-}
-
-
-    </style>
+</style>
 </head>
 <body class="light-mode">
 
