@@ -268,6 +268,9 @@
     100% { background-position: 200%; }
 }
         /* === LOGO 3D M === */
+/* =========================
+   LOGO 3D CONTAINER
+========================= */
 .logo-3d {
     width: 42px;
     height: 42px;
@@ -281,21 +284,36 @@
         0 8px 20px rgba(99,102,241,0.4),
         inset 0 2px 6px rgba(255,255,255,0.3);
     overflow: hidden;
+
+    /* 🔥 COMBINE ANIMATION */
     animation: glowPulse 3s infinite ease-in-out;
+
+    /* ✅ BIAR SMOOTH HOVER */
+    transition: all 0.35s ease;
 }
 
-/* TEXT M */
+/* =========================
+   TEXT M (ORBIT + 3D)
+========================= */
 .logo-3d span {
     font-weight: 900;
     font-size: 18px;
     color: white;
+    position: absolute;
+
+    /* 🔥 ORBIT + GLOW */
+    animation: orbitMove 4s linear infinite;
+
     text-shadow:
         0 2px 4px rgba(0,0,0,0.4),
         0 0 10px rgba(255,255,255,0.6);
+
     transform: translateZ(10px);
 }
 
-/* GLOW ANIMATION */
+/* =========================
+   GLOW ANIMATION
+========================= */
 @keyframes glowPulse {
     0%, 100% {
         box-shadow: 
@@ -309,7 +327,20 @@
     }
 }
 
-/* ✨ SPARKLE EFFECT */
+/* =========================
+   ORBIT MOVEMENT (HALUS)
+========================= */
+@keyframes orbitMove {
+    0%   { transform: translate(0px, -4px); }
+    25%  { transform: translate(3px, -3px); }
+    50%  { transform: translate(4px, 0px); }
+    75%  { transform: translate(3px, 3px); }
+    100% { transform: translate(0px, 4px); }
+}
+
+/* =========================
+   ✨ SPARKLE EFFECT
+========================= */
 .logo-3d::before {
     content: "";
     position: absolute;
@@ -339,10 +370,19 @@
         opacity: 0;
     }
 }
-        .logo-3d:hover {
+
+/* =========================
+   HOVER EFFECT (INTERACTIVE)
+========================= */
+.logo-3d:hover {
     transform: scale(1.1) rotate(3deg);
     filter: brightness(1.2);
-        }
+}
+
+/* 🔥 BONUS: HOVER = ORBIT LEBIH CEPAT */
+.logo-3d:hover span {
+    animation-duration: 1.5s;
+    }
     </style>
 </head>
 <body class="light-mode">
