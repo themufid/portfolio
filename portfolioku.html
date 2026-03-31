@@ -948,402 +948,226 @@ bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
 
     
     
-<script>
-document.addEventListener("DOMContentLoaded", () => {
 
-    // =========================
-    // 3D BACKGROUND
-    // =========================
-    let scene, camera, renderer, globe, starField;
-    let mouseX = 0, mouseY = 0;
-
-    function init3D() {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-
-        const container = document.getElementById('canvas-container');
-        if (container) container.appendChild(renderer.domElement);
-
-        const light = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(light);
-
-        const globeGeo = new THREE.SphereGeometry(180, 64, 64);
-        const globeMat = new THREE.MeshPhongMaterial({
-            color: 0x6366f1,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.5
-        });
-
-        globe = new THREE.Mesh(globeGeo, globeMat);
-        globe.position.set(window.innerWidth > 1024 ? 350 : 0, 0, 0);
-        scene.add(globe);
-
-        const starsGeo = new THREE.BufferGeometry();
-        const starsCount = 4000;
-        const starsPos = new Float32Array(starsCount * 3);
-
-        for (let i = 0; i < starsCount * 3; i++) {
-            starsPos[i] = (Math.random() - 0.5) * 3000;
-        }
-
-        starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));
-
-        starField = new THREE.Points(
-            starsGeo,
-            new THREE.PointsMaterial({ color: 0x6366f1, size: 2 })
-        );
-
-        scene.add(starField);
-
-        camera.position.z = 800;
-        animate();
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-
-        if (globe) {
-            globe.rotation.y += 0.005;
-            globe.position.y += (mouseY * 0.05 - globe.position.y) * 0.05;
-        }
-
-        if (starField) {
-            starField.rotation.y += 0.0002;
-        }
-
-        renderer.render(scene, camera);
-    }
-
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX - window.innerWidth / 2;
-        mouseY = e.clientY - window.innerHeight / 2;
-    });
-
-    // =========================
-    // THEME TOGGLE
-    // =========================
-    const themeBtn = document.getElementById('themeToggle');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-
-            document.getElementById('themeIcon')
-                .setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-
-            lucide.createIcons();
-        });
-    }
-
-    // =========================
-    // NOTIFICATION
-    // =========================
-    function createNotif(title, desc, link) {
-        const container = document.getElementById("notif-container");
-        if (!container) return;
-
-        const notif = document.createElement("div");
-        notif.className = "notif relative";
-
-        notif.innerHTML = `
-            <div class="notif-close">✕</div>
-            <div class="notif-title">${title}</div>
-            <div class="notif-desc mt-1">${desc}</div>
-        `;
-
-        notif.addEventListener("click", () => {
-            if (link) window.open(link, "_blank");
-        });
-
-        notif.querySelector(".notif-close").addEventListener("click", (e) => {
-            e.stopPropagation();
-            notif.remove();
-        });
-
-        container.appendChild(notif);
-
-        setTimeout(() => notif.classList.add("show"), 100);
-    }
-
-    function showNotifs() {
-        createNotif("🔥 Open Project", "Lihat project terbaru saya", "https://hinaitech.com");
-
-        setTimeout(() => {
-            createNotif("🚀 Digital Product", "Cek produk digital saya", "https://Lynk.id/almufid");
-        }, 800);
-
-        setTimeout(() => {
-            createNotif("💬 Hubungi Saya", "Klik untuk chat WhatsApp langsung", "https://wa.me/6282144137914");
-        }, 1600);
-    }
-
-
-// =========================
-// INSTALL PWA (FIX FINAL)
-// =========================
-let deferredPrompt = null;
-
-// DETECT INSTALL PROMPT
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    setTimeout(() => {
-        document.getElementById('installPopup')?.classList.remove('hidden');
-    }, 2000);
-});
-
-// AMBIL ELEMENT BUTTON
-const installBtn = document.getElementById("installBtn");
-const installSound = document.getElementById("installSound");
-
-// CLICK INSTALL
-if (installBtn) {
-    installBtn.addEventListener("click", async () => {
-
-        // PLAY SOUND (AMAN)
-        try {
-            await installSound?.play();
-        } catch (e) {
-            console.log("Audio blocked:", e);
-        }
-
-        // ANDROID INSTALL
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-
-            const { outcome } = await deferredPrompt.userChoice;
-
-            if (outcome === 'accepted') {
-                console.log("User installed app ✅");
-            } else {
-                console.log("User canceled install ❌");
-            }
-
-            deferredPrompt = null;
-            closeInstall();
-
-        } else {
-            // IOS / FALLBACK
-            alert("📲 iPhone:\nTap Share → Add to Home Screen");
-        }
-    });
-}
-
-// CLOSE POPUP
-function closeInstall() {
-    document.getElementById('installPopup')?.classList.add('hidden');
-}
-    
-    // =========================
-    // SPLASH SCREEN
-    // =========================
-    setTimeout(() => {
-        const splash = document.getElementById("splashScreen");
-        if (splash) {
-            splash.style.opacity = "0";
-            setTimeout(() => splash.style.display = "none", 500);
-        }
-    }, 2000);
-
-    // =========================
-    // LOADING NAV
-    // =========================
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener("click", () => {
-            const loading = document.getElementById("loadingScreen");
-            if (!loading) return;
-
-            loading.classList.remove("hidden");
-
-            setTimeout(() => {
-                loading.classList.add("hidden");
-            }, 800);
-        });
-    });
-
-// =========================
-// STATE
-// =========================
-let chatMemory = JSON.parse(localStorage.getItem("chatMemory")) || [];
-let interestScore = parseInt(localStorage.getItem("interestScore")) || 0;
-
-// =========================
-// ELEMENT
-// =========================
-const toggleBtn = document.getElementById("chatbot-toggle");
-const chatBox = document.getElementById("chatbot-box");
-const closeBtn = document.getElementById("closeChat");
-
-// =========================
-// OPEN CHAT
-// =========================
-toggleBtn.onclick = () => {
-    chatBox.classList.remove("hidden");
-
-    // UCAPAN AWAL (hanya sekali)
-    if (chatMemory.length === 0) {
-        addMessage("Selamat Datang di Chatbot buatan Mufid 👋\nJika ada pertanyaan silahkan ajukan ya...", "bot");
-    }
-};
-
-// =========================
-// CLOSE CHAT
-// =========================
-closeBtn.onclick = () => {
-    chatBox.classList.add("hidden");
-};
-
-// =========================
-// ADD MESSAGE
-// =========================
-function addMessage(text, sender) {
-    const msg = document.createElement("div");
-    msg.className = "msg " + sender;
-    msg.innerText = text;
-
-    document.getElementById("chatbot-messages").appendChild(msg);
-    msg.scrollIntoView();
-
-    chatMemory.push({ text, sender });
-    localStorage.setItem("chatMemory", JSON.stringify(chatMemory));
-}
-
-// =========================
-// SEND
-// =========================
-document.getElementById("sendBtn").onclick = sendMessage;
-
-function sendMessage() {
-    const input = document.getElementById("chatInput");
-    const text = input.value.trim();
-    if (!text) return;
-
-    addMessage(text, "user");
-    input.value = "";
-
-    setTimeout(() => {
-        const reply = AIResponse(text);
-        addMessage(reply, "bot");
-    }, 600);
-}
-
-// ENTER
-document.getElementById("chatInput").addEventListener("keypress", e => {
-    if (e.key === "Enter") sendMessage();
-});
-
-// =========================
-// 🤖 AI RESPONSE (SMART)
-// =========================
-function AIResponse(input) {
-    input = input.toLowerCase();
-
-    // TRACK MINAT
-    if (input.match(/harga|order|jasa|buat|bikin/)) {
-        interestScore++;
-        localStorage.setItem("interestScore", interestScore);
-    }
-
-    // AUTO CLOSING
-    if (interestScore >= 3) {
-        setTimeout(() => {
-            addMessage("🔥 Sepertinya kamu serius, saya bantu langsung ke WhatsApp ya biar cepat deal 👇", "bot");
-            setTimeout(() => {
-                window.open("https://wa.me/628XXXXXXXXXX", "_blank");
-            }, 1500);
-        }, 1200);
-    }
-
-    // =========================
-    // LAYANAN UTAMA
-    // =========================
-
-    if (input.includes("website")) {
-        return "Saya bisa bantu pembuatan Website Company Profile, Landing Page, hingga Web App profesional 🚀";
-    }
-
-    if (input.includes("landing page")) {
-        return "Landing Page saya fokus ke conversion tinggi + desain modern 🔥";
-    }
-
-    if (input.includes("seo") || input.includes("artikel")) {
-        return "Saya menyediakan jasa Artikel SEO agar ranking di Google dan mendatangkan traffic 📈";
-    }
-
-    if (input.includes("desain")) {
-        return "Saya juga menyediakan UI/UX Design modern (Figma hingga production ready 🎨)";
-    }
-
-    if (input.includes("ai") || input.includes("machine learning")) {
-        return "Saya bisa bantu AI Automation, Machine Learning, hingga sistem pintar berbasis data 🤖";
-    }
-
-    if (input.includes("data science")) {
-        return "Layanan Data Science meliputi analisis data, dashboard, hingga predictive system 📊";
-    }
-
-    if (input.includes("ketik")) {
-        return "Saya juga menyediakan jasa ketik profesional dan pengolahan dokumen 📄";
-    }
-
-    // =========================
-    // UMUM
-    // =========================
-
-    if (input.includes("halo") || input.includes("hai")) {
-        return "Halo 👋 Ada yang bisa saya bantu hari ini?";
-    }
-
-    if (input.includes("harga")) {
-        return "Harga fleksibel sesuai kebutuhan 👍 Mau saya bantu rekomendasikan?";
-    }
-
-    if (input.includes("kontak")) {
-        return "Silahkan klik tombol WhatsApp ya untuk konsultasi langsung 📲";
-    }
-
-    if (input.includes("siapa")) {
-        return "Saya adalah AI Assistant dari Rodhi Faisal Mufid 😎";
-    }
-
-    // CONTEXT
-    if (chatMemory.length > 4) {
-        return "Saya mulai memahami kebutuhan kamu 👍 Bisa dijelaskan target atau tujuan kamu?";
-    }
-
-    return "Menarik 🤔 Bisa dijelaskan lebih detail supaya saya bantu lebih tepat?";
-}
-
-    // =========================
-    // APP MODE
-    // =========================
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-        document.body.classList.add("app-mode");
-    }
-
-    // =========================
-    // INIT ALL
-    // =========================
-    lucide.createIcons();
-    init3D();
-    AOS.init({ duration: 800, once: true });
-    showNotifs();
-
-});
-
-// =========================
-// SERVICE WORKER
-// =========================
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-}
-    
-
+<script>  
+document.addEventListener("DOMContentLoaded", () => {  
+  
+    // =========================  
+    // 3D BACKGROUND  
+    // =========================  
+    let scene, camera, renderer, globe, starField;  
+    let mouseX = 0, mouseY = 0;  
+  
+    function init3D() {  
+        scene = new THREE.Scene();  
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);  
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });  
+        renderer.setSize(window.innerWidth, window.innerHeight);  
+  
+        const container = document.getElementById('canvas-container');  
+        if (container) container.appendChild(renderer.domElement);  
+  
+        const light = new THREE.AmbientLight(0xffffff, 0.8);  
+        scene.add(light);  
+  
+        const globeGeo = new THREE.SphereGeometry(180, 64, 64);  
+        const globeMat = new THREE.MeshPhongMaterial({  
+            color: 0x6366f1,  
+            wireframe: true,  
+            transparent: true,  
+            opacity: 0.5  
+        });  
+  
+        globe = new THREE.Mesh(globeGeo, globeMat);  
+        globe.position.set(window.innerWidth > 1024 ? 350 : 0, 0, 0);  
+        scene.add(globe);  
+  
+        const starsGeo = new THREE.BufferGeometry();  
+        const starsCount = 4000;  
+        const starsPos = new Float32Array(starsCount * 3);  
+  
+        for (let i = 0; i < starsCount * 3; i++) {  
+            starsPos[i] = (Math.random() - 0.5) * 3000;  
+        }  
+  
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(starsPos, 3));  
+  
+        starField = new THREE.Points(  
+            starsGeo,  
+            new THREE.PointsMaterial({ color: 0x6366f1, size: 2 })  
+        );  
+  
+        scene.add(starField);  
+  
+        camera.position.z = 800;  
+        animate();  
+    }  
+  
+    function animate() {  
+        requestAnimationFrame(animate);  
+  
+        if (globe) {  
+            globe.rotation.y += 0.005;  
+            globe.position.y += (mouseY * 0.05 - globe.position.y) * 0.05;  
+        }  
+  
+        if (starField) {  
+            starField.rotation.y += 0.0002;  
+        }  
+  
+        renderer.render(scene, camera);  
+    }  
+  
+    window.addEventListener('mousemove', (e) => {  
+        mouseX = e.clientX - window.innerWidth / 2;  
+        mouseY = e.clientY - window.innerHeight / 2;  
+    });  
+  
+    // =========================  
+    // THEME TOGGLE  
+    // =========================  
+    const themeBtn = document.getElementById('themeToggle');  
+    if (themeBtn) {  
+        themeBtn.addEventListener('click', () => {  
+            document.body.classList.toggle('dark-mode');  
+            const isDark = document.body.classList.contains('dark-mode');  
+  
+            document.getElementById('themeIcon')  
+                .setAttribute('data-lucide', isDark ? 'sun' : 'moon');  
+  
+            lucide.createIcons();  
+        });  
+    }  
+  
+    // =========================  
+    // NOTIFICATIONS  
+    // =========================  
+    function createNotif(title, desc, link) {  
+        const container = document.getElementById("notif-container");  
+        if (!container) return;  
+  
+        const notif = document.createElement("div");  
+        notif.className = "notif relative";  
+  
+        notif.innerHTML = `  
+            <div class="notif-close">✕</div>  
+            <div class="notif-title">${title}</div>  
+            <div class="notif-desc mt-1">${desc}</div>  
+        `;  
+  
+        notif.addEventListener("click", () => {  
+            if (link) window.open(link, "_blank");  
+        });  
+  
+        notif.querySelector(".notif-close").addEventListener("click", (e) => {  
+            e.stopPropagation();  
+            notif.remove();  
+        });  
+  
+        container.appendChild(notif);  
+        setTimeout(() => notif.classList.add("show"), 100);  
+    }  
+  
+    function showNotifs() {  
+        createNotif("🔥 Open Project", "Lihat project terbaru saya", "https://hinaitech.com");  
+        setTimeout(() => {  
+            createNotif("🚀 Digital Product", "Cek produk digital saya", "https://Lynk.id/almufid");  
+        }, 800);  
+        setTimeout(() => {  
+            createNotif("💬 Hubungi Saya", "Klik untuk chat WhatsApp langsung", "https://wa.me/6282144137914");  
+        }, 1600);  
+    }  
+  
+    // =========================  
+    // INSTALL PWA  
+    // =========================  
+    let deferredPrompt = null;  
+  
+    window.addEventListener('beforeinstallprompt', (e) => {  
+        e.preventDefault();  
+        deferredPrompt = e;  
+  
+        setTimeout(() => {  
+            document.getElementById('installPopup')?.classList.remove('hidden');  
+        }, 2000);  
+    });  
+  
+    const installBtn = document.getElementById("installBtn");  
+    const installSound = document.getElementById("installSound");  
+  
+    if (installBtn) {  
+        installBtn.addEventListener("click", async () => {  
+            try { await installSound?.play(); } catch (e) { console.log("Audio blocked:", e); }  
+  
+            if (deferredPrompt) {  
+                deferredPrompt.prompt();  
+                const { outcome } = await deferredPrompt.userChoice;  
+  
+                console.log(outcome === 'accepted' ? "User installed app ✅" : "User canceled install ❌");  
+                deferredPrompt = null;  
+                closeInstall();  
+            } else {  
+                alert("📲 iPhone:\nTap Share → Add to Home Screen");  
+            }  
+        });  
+    }  
+  
+    function closeInstall() {  
+        document.getElementById('installPopup')?.classList.add('hidden');  
+    }  
+  
+    // =========================  
+    // SPLASH SCREEN  
+    // =========================  
+    setTimeout(() => {  
+        const splash = document.getElementById("splashScreen");  
+        if (splash) {  
+            splash.style.opacity = "0";  
+            setTimeout(() => splash.style.display = "none", 500);  
+        }  
+    }, 2000);  
+  
+    // =========================  
+    // SMOOTH NAVIGATION  
+    // =========================  
+    document.querySelectorAll('a[href^="#"]').forEach(link => {  
+        link.addEventListener("click", () => {  
+            const loading = document.getElementById("loadingScreen");  
+            if (!loading) return;  
+  
+            loading.classList.remove("hidden");  
+            setTimeout(() => loading.classList.add("hidden"), 800);  
+        });  
+    });  
+  
+    // =========================  
+    // APP MODE  
+    // =========================  
+    if (window.matchMedia('(display-mode: standalone)').matches) {  
+        document.body.classList.add("app-mode");  
+    }  
+  
+    // =========================  
+    // INIT  
+    // =========================  
+    lucide.createIcons();  
+    init3D();  
+    AOS.init({ duration: 800, once: true });  
+    showNotifs();  
+  
+});  
+  
+// =========================  
+// SERVICE WORKER  
+// =========================  
+if ('serviceWorker' in navigator) {  
+    navigator.serviceWorker.register('/sw.js');  
+}  
 </script>
+
+
+
+
 
 </body>
    <!-- Footer -->
