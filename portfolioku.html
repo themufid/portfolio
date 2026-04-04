@@ -292,6 +292,71 @@ body {
 @media (max-width: 768px) {
     .bottom-nav { width: 95%; justify-content: space-around; gap: 5px; }
 }
+    
+    /* ADDON SECTION */
+.addon-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(168,85,247,0.1));
+    padding: 30px;
+    border-radius: 28px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: 0.4s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.addon-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(99,102,241,0.3);
+}
+
+.addon-card h3 {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.addon-card ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.addon-card li {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.addon-box {
+    padding: 40px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #6366f1, #9333ea, #ec4899);
+    color: white;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.highlight {
+    font-weight: bold;
+    color: #6366f1;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #6366f1, #9333ea);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(99,102,241,0.4);
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background: white;
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-weight: bold;
+}
 </style>
 </head>
 <body class="light-mode">
@@ -503,6 +568,170 @@ bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-md">
 
         </div>
     </div>
+</section>
+
+    <!-- ADD-ON PROFESSIONAL SECTION -->
+<section id="addon" class="py-24">
+
+    <!-- HEADLINE -->
+    <div class="text-center mb-16" data-aos="zoom-in">
+        <h2 class="text-4xl md:text-5xl font-black gradient-text mb-4">
+            🚀 Professional Roles & Business Ventures
+        </h2>
+        <p class="max-w-2xl mx-auto text-slate-500">
+            I am not only a Software Engineer, but also a multidisciplinary professional who actively builds and manages several business sectors.
+        </p>
+        <div class="mt-4 text-sm font-bold text-indigo-600">
+            “Tech Founder | Educator | Digital Strategist | Umrah Travel Consultant”
+        </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- FOUNDER -->
+        <div class="addon-card" data-aos="fade-up">
+            <h3>💼 Founder & CEO at PT. Heroic Inovasi Nusantara</h3>
+            <p>
+                As the founder of PT. Heroic Inovasi Nusantara, I lead the development of digital solutions, AI automation, and scalable business systems.
+            </p>
+
+            <ul>
+                <li>Website & Landing Page Development</li>
+                <li>AI Automation, Model Development, and Business System Integration</li>
+                <li>Digital Marketing Strategy (Meta Ads, Funnel, Conversion)</li>
+                <li>Branding & Growth Consulting</li>
+            </ul>
+
+            <p class="highlight">
+                👉 Helping businesses grow faster, smarter, and more efficiently through technology.
+            </p>
+        </div>
+
+        <!-- EDUCATOR -->
+        <div class="addon-card" data-aos="fade-up" data-aos-delay="150">
+            <h3>🧑‍🏫 Tech Educator & Digital Trainer</h3>
+            <p>
+                I actively contribute in the education sector as a teacher, trainer, and mentor.
+            </p>
+
+            <ul>
+                <li>Koding and Kecerdasan Artificial</li>>
+                <li>Laboratorium Practical Computer (LPK)</li>
+                <li>Web Development (Frontend & Backend)</li>
+                <li>AI & Automation for Productivity</li>
+                <li>Digital Marketing & Personal Branding</li>
+                <li>Computational Thinking & Tech Education</li>
+            </ul>
+
+            <p class="highlight">
+                👉 Empowering individuals to become future-ready in the digital era.
+            </p>
+        </div>
+
+        <!-- UMRAH -->
+        <div class="addon-card" data-aos="fade-up" data-aos-delay="300">
+            <h3>🕋 Official Umrah Travel Agent of Salam Travel</h3>
+            <p>
+                I am also actively involved as an Umrah Travel Agent in collaboration with Salam Travel.
+            </p>
+
+            <ul>
+                <li>Umrah package consultation (regular, VIP, private)</li>
+                <li>Guidance & assistance for pilgrims</li>
+                <li>Trusted & safe travel management</li>
+                <li>Personalized Umrah experience</li>
+            </ul>
+
+            <p class="highlight">
+                👉 Helping Muslims fulfill their spiritual journey with comfort and trust.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- VALUE -->
+    <div class="addon-box mt-16" data-aos="zoom-in">
+        <h3>🎯 Integrated Value (Why Choose Me?)</h3>
+
+        <div class="grid md:grid-cols-4 gap-6 mt-6 text-center">
+            <div>💻 Build your digital system</div>
+            <div>📈 Grow your brand</div>
+            <div>🎓 Upgrade your skills</div>
+            <div>🕋 Support your Umrah journey</div>
+        </div>
+
+        <p class="highlight text-center mt-6">
+            👉 One person. Multiple expertise. Real solutions.
+        </p>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="grid md:grid-cols-2 gap-8 mt-16">
+
+        <div class="addon-card">
+            <h3>💼 Business & Corporate</h3>
+            <ul>
+                <li>Website & Company Profile Development</li>
+                <li>AI Automation System</li>
+                <li>Digital Marketing Strategy</li>
+                <li>Funnel & Conversion Optimization</li>
+                <li>Branding & Positioning</li>
+            </ul>
+        </div>
+
+        <div class="addon-card">
+            <h3>🎓 Education & Training</h3>
+            <ul>
+                <li>Tech & Coding Training</li>
+                <li>AI & Digital Skill Workshops</li>
+                <li>School Digital Transformation</li>
+                <li>Private Mentoring & Coaching</li>
+            </ul>
+        </div>
+
+        <div class="addon-card">
+            <h3>👤 Personal & Professional</h3>
+            <ul>
+                <li>Personal Branding Setup</li>
+                <li>Portfolio Website Creation</li>
+                <li>Freelancing Strategy</li>
+                <li>Content & Copywriting</li>
+            </ul>
+        </div>
+
+        <div class="addon-card">
+            <h3>🕋 Umrah Travel Services</h3>
+            <ul>
+                <li>Umrah Package Booking</li>
+                <li>Consultation & Guidance</li>
+                <li>Group & Private Packages</li>
+                <li>End-to-End Assistance</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="addon-cta mt-20 text-center" data-aos="zoom-in">
+        <h3 class="text-3xl font-black mb-4">
+            🚀 Let’s Build, Grow, and Go Further — Together
+        </h3>
+
+        <p class="text-slate-500 mb-6">
+            Whether you want to build, grow, upgrade, or plan your Umrah journey.
+        </p>
+
+        <p class="highlight mb-8">
+            👉 I am here to help you every step of the way.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#contact" class="btn-primary">Hubungi Saya</a>
+            <a href="https://hinaitech.com" target="_blank" class="btn-secondary">Explore My Services</a>
+        </div>
+    </div>
+
 </section>
 
         <!-- Layanan Unggulan -->
@@ -1163,6 +1392,19 @@ document.addEventListener("DOMContentLoaded", () => {
 if ('serviceWorker' in navigator) {  
     navigator.serviceWorker.register('/sw.js');  
 }  
+    // ANIMATION INTERACTION
+document.querySelectorAll('.addon-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        let x = e.offsetX;
+        let y = e.offsetY;
+
+        card.style.transform = `rotateX(${(y - 100)/20}deg) rotateY(${(x - 150)/20}deg) scale(1.03)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = "rotateX(0) rotateY(0)";
+    });
+});
 </script>
 
 
